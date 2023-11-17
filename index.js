@@ -60,6 +60,10 @@ async function updateFile(newPlayer) {
         const { content, sha } = await getFile();
         const file = JSON.parse(content);
 
+        const existingPlayerIndex = file.players.findIndex(
+            (player) => player.token === newPlayer.token
+        );
+
         if (existingPlayerIndex !== -1) {
             if (newPlayer.record > file.players[existingPlayerIndex].record)
                 file.players[existingPlayerIndex] = newPlayer;
