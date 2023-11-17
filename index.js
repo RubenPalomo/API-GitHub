@@ -60,7 +60,10 @@ async function updateFile(newPlayer) {
         const { content, sha } = await getFile();
         const file = JSON.parse(content);
 
-        file.players.push(newPlayer);
+        if (existingPlayerIndex !== -1) {
+            if (newPlayer.record > file.players[existingPlayerIndex].record)
+                file.players[existingPlayerIndex] = newPlayer;
+        } else file.players.push(newPlayer);
 
         const newContent = Buffer.from(
             JSON.stringify(file, null, 2)
